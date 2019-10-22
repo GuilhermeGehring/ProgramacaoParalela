@@ -16,8 +16,11 @@ public class Threads1 {
         Tarefa tarefa3 = new Tarefa("3");
         Runnable outraTarefa = tarefa3;
         
-        tarefa3.fazUmaCoisa();
-        outraTarefa.run();
+        Thread th1 = new Thread(tarefa1, "thread1");
+        Thread th2 = new Thread(tarefa2, "thread2");
+        
+        th1.start();
+        th2.start();
         
     }
 }
