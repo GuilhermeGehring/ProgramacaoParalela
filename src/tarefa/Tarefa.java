@@ -17,6 +17,7 @@ public class Tarefa implements Runnable {
     private int min;
     private int max;
     private ArrayList<Integer> contagem = new ArrayList<>();
+    private ArrayList<Integer> primo = new ArrayList<>();
     Tarefa tarefaAmiga;
 
     public Tarefa(String nome, int min, int max) {
@@ -36,31 +37,27 @@ public class Tarefa implements Runnable {
     }
     
     private void fazContagem(){
-        for(int cont = min; cont <= max; cont++)
+        for(int cont = min; cont < max; cont++) {
             contagem.add(cont);
+            isPrimo(cont);
+        }
+    }
+    
+    protected void listaContagem(){
+        for(int cont : contagem)
+            System.out.println("Tarefa " + nome + " | contagem " + cont);
+    }
+    
+    protected void listaPrimo(){
+        for(int cont : primo)
+            System.out.println("Tarefa " + nome + " | contagem " + cont);
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public void setMin(int min) {
-        this.min = min;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public void setMax(int max) {
-        this.max = max;
+    private void isPrimo(int valor){
+        for(int i = valor / 2; i > 1; i--) {
+            if (valor % i == 0)
+                return;
+        }
+        primo.add(valor);
     }
 }
