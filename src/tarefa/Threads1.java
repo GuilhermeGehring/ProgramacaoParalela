@@ -5,22 +5,41 @@
  */
 package tarefa;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author 20171pf.cc0178
  */
 public class Threads1 {
     public static void main(String[] args) {
-        Runnable tarefa1 = new Tarefa("1");
-        Runnable tarefa2 = new Tarefa("2");
-        Tarefa tarefa3 = new Tarefa("3");
-        Runnable outraTarefa = tarefa3;
         
-        Thread th1 = new Thread(tarefa1, "thread1");
-        Thread th2 = new Thread(tarefa2, "thread2");
+        /*Divisão das tarefas*/
+        int trabalho = 100;
+        int tarefas = 10;
         
-        th1.start();
-        th2.start();
+        if(trabalho % tarefas != 0) {
+            System.out.println("Divisão de tarefas não é exata.");
+            System.exit(0);
+        }
+        int fatia = trabalho / tarefas;
+        int min = 0, max;
         
+        ArrayList<Tarefa> listaTarefa = new ArrayList<>();
+        ArrayList<Thread> listaThreads = new ArrayList<>();
+        /*Escalonamento das tarefas*/
+        for (int i = 0; i < tarefas; i++) {
+            max = min + fatia;
+            if(max > trabalho)
+                max = trabalho;
+            Tarefa t = new Tarefa(String.valueOf(i), min, max);
+            listaTarefa.add(t);
+            min = max + 1;
+            
+            Thread th = new Thread(t, "thread"+i);
+            listaThreads.add(th);
+            th.start();
+        }
+        System.out.println("Minimo: " + listaTarefa.get(5).getMin());
     }
 }
